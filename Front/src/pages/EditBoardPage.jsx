@@ -1,103 +1,183 @@
 /*---------------------------------------------------------------*\
  * EditBoardPage.jsx
  * 
- * Página de edición de un tablero. Permite a los usuarios editar
- * el título y la descripción de un tablero específico.
+ * Página de edición de un tablero. Permite modificar el título, la descripción
+ * y los miembros de un tablero existente.
  * 
- * Propósito:
- * - Obtener los datos del tablero desde la API.
- * - Permitir al usuario editar los datos del tablero.
- * - Guardar los cambios realizados al tablero en la base de datos.
+ * Funcionalidad:
+ * - Carga los datos del tablero a editar usando el ID de la URL.
+ * - Permite modificar el título y la descripción del tablero.
+ * - Permite añadir o eliminar miembros del tablero seleccionando de una lista de contactos.
+ * - Envía los cambios al backend para actualizar el tablero.
+ * - Muestra notificaciones en caso de errores durante la carga o el envío de datos.
  * 
- * Hooks usados:
- * - `useState`: Para gestionar el estado de los campos del formulario (título y descripción).
- * - `useEffect`: Para cargar los datos del tablero cuando se monta el componente o cambia el ID del tablero.
- * - `useParams`, `useNavigate`: Para acceder al ID del tablero desde la URL y navegar tras guardar los cambios.
- * 
- * Funcionamiento:
- * - Cuando se monta el componente, se hace una petición a la API para cargar los datos del tablero.
- * - Los campos de título y descripción se llenan con los datos actuales del tablero.
- * - El usuario puede editar estos campos y luego enviar el formulario para actualizar el tablero.
- * - Los cambios se guardan a través de una petición PUT a la API.
+ * Hooks y Componentes:
+ * - `useEffect`: Para cargar los datos del tablero y los contactos disponibles para añadir.
+ * - `useState`: Para gestionar los valores del formulario, como título, descripción y miembros seleccionados.
+ * - `useParams`: Para obtener el `boardId` de la URL y cargar el tablero correspondiente.
+ * - `useNavigate`: Para redirigir al usuario después de guardar los cambios.
+ * - `useFetch`: Hook personalizado para realizar solicitudes a la API.
+ * - `ToastContainer`: Componente para mostrar notificaciones al usuario.
  * 
  *---------------------------------------------------------------*/
 
-import { useState, useEffect } from 'react'; 
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useFetch from '@/hooks/useFetch';
 import styles from './EditBoardPage.module.css';
+import ToastContainer from '@/components/ToastContainer';
 
 const EditBoardPage = () => {
-    const { boardId } = useParams();  // Obtener el ID del tablero desde la URL
-    const { data, error, loading, fetchData } = useFetch();  // Hook personalizado para obtener datos y realizar peticiones
-    const navigate = useNavigate();  // Hook para la navegación
+    // Obtener el ID del tablero desde los parámetros de la URL
+    const { boardId } = useParams();
+    
+    // Obtener los datos, error y estado de carga para las solicitudes a la API
+    const { data, error, loading, fetchData } = useFetch();
+    
+    // Función para redirigir después de guardar los cambios
+    const navigate = useNavigate();
+    
+    // Referencia para el contenedor de notificaciones (Toast)
+    const toastRef = useRef();
 
-    // Estados para el título y la descripción del tablero
+    // Estado para manejar los valores del formulario
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [currentMembers, setCurrentMembers] = useState([]);
+    const [contacts, setContacts] = useState([]);
+    const [selectedMembers, setSelectedMembers] = useState([]);
 
-    // Efecto que carga los datos del tablero cuando cambia el ID del tablero
+    // Efecto para cargar el tablero y los contactos disponibles
     useEffect(() => {
         if (boardId) {
-            fetchData(`/api/board/${boardId}`, 'GET')  // Petición GET para obtener los datos del tablero
+            fetchData(`/api/board/${boardId}`, 'GET')  // Cargar los datos del tablero
                 .then((response) => {
                     if (response) {
-                        setTitle(response.board.title);  // Establecer el título en el estado
-                        setDescription(response.board.description || '');  // Establecer la descripción, si existe
+                        setTitle(response.board.title);  // Establecer el título
+                        setDescription(response.board.description || '');  // Establecer la descripción
+                        setCurrentMembers(response.board.members || []);  // Establecer los miembros actuales
                     }
                 })
-                .catch((err) => console.error("Error al cargar el tablero:", err));  // Manejo de errores
+                .catch((err) => console.error("Error al cargar el tablero:", err));
         }
-    }, [boardId]);  // El efecto se ejecuta cada vez que cambia el `boardId`
 
-    // Función que maneja el envío del formulario
+        // Función para cargar los contactos disponibles para añadir
+        const fetchContacts = async () => {
+            try {
+                const result = await fetchData('/api/user/contacts', 'GET');
+                if (Array.isArray(result) && result.length > 0) {
+                    setContacts(result);  // Establecer los contactos disponibles
+                }
+            } catch (err) {
+                console.error("Error al cargar contactos:", err);
+                toastRef.current?.addToast('Error al cargar contactos.', 'error');  // Mostrar notificación de error
+            }
+        };
+
+        fetchContacts();
+    }, [boardId]);  // Dependencia de `boardId` para recargar los datos al cambiar el ID del tablero
+
+    // Manejo del envío del formulario para actualizar el tablero
     const handleSubmit = async (e) => {
-        e.preventDefault();  // Prevenir el comportamiento por defecto del formulario
+        e.preventDefault();  // Prevenir comportamiento por defecto del formulario
 
+        // Crear el objeto con los datos actualizados del tablero
         const updatedBoard = {
-            title,  // Obtener el título actualizado
-            description,  // Obtener la descripción actualizada
+            title,
+            description,
+            members: [...currentMembers, ...selectedMembers],  // Añadir miembros seleccionados
         };
 
         try {
-            // Enviar una petición PUT para actualizar el tablero
+            // Enviar los datos actualizados al backend para guardarlos
             await fetchData(`/api/board/${boardId}`, 'PUT', updatedBoard);
-
-            // Navegar de vuelta a la página del tablero después de guardar los cambios
-            navigate(`/board/${boardId}`);
+            navigate(`/board/${boardId}`);  // Redirigir al usuario al tablero después de guardar los cambios
         } catch (err) {
-            console.error("Error al editar el tablero:", err);  // Manejo de errores al enviar la solicitud
+            console.error("Error al editar el tablero:", err);
         }
     };
 
-    // Mostrar un mensaje de carga mientras se obtiene la información
+    // Manejo de la selección y deselección de miembros
+    const handleSelectMember = (memberId) => {
+        setSelectedMembers(prevMembers => {
+            // Si el miembro ya está seleccionado, lo eliminamos, si no, lo añadimos
+            if (prevMembers.includes(memberId)) {
+                return prevMembers.filter(id => id !== memberId);
+            } else {
+                return [...prevMembers, memberId];
+            }
+        });
+    };
+
+    // Mostrar mensaje de carga mientras los datos están siendo procesados
     if (loading) return <p>Cargando formulario de edición...</p>;
 
-    // Mostrar un mensaje de error si no se puede cargar el tablero
+    // Mostrar mensaje de error si ocurrió un problema al cargar los datos
     if (error) return <p>Error al cargar el tablero para editar.</p>;
+
+    // Filtrar los contactos disponibles que no sean miembros actuales del tablero
+    const availableContacts = contacts.filter(contact =>
+        !currentMembers.some(member => member._id === contact._id)
+    );
 
     return (
         <div className={styles['edit-board-container']}>
-            <h2>Editar Tablero</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Título</label>
+            <h2 className={styles['edit-board-container__title']}>Editar Tablero</h2>
+            <form onSubmit={handleSubmit} className={styles['edit-board-form']}>
+                {/* Campo de Título */}
+                <div className={styles['edit-board-form__group']}>
+                    <label className={styles['edit-board-form__label']}>Título</label>
                     <input
                         type="text"
-                        value={title}  // El valor del campo se vincula al estado
-                        onChange={(e) => setTitle(e.target.value)}  // Actualizar el estado cuando el valor cambie
-                        required  // El título es un campo obligatorio
+                        className={styles['edit-board-form__input']}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        required
                     />
                 </div>
-                <div>
-                    <label>Descripción</label>
+
+                {/* Campo de Descripción */}
+                <div className={styles['edit-board-form__group']}>
+                    <label className={styles['edit-board-form__label']}>Descripción</label>
                     <textarea
-                        value={description}  // El valor del textarea se vincula al estado
-                        onChange={(e) => setDescription(e.target.value)}  // Actualizar el estado cuando el valor cambie
+                        className={styles['edit-board-form__textarea']}
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
-                <button type="submit">Guardar Cambios</button>  {/* Botón para enviar el formulario */}
+
+                {/* Selección de Miembros */}
+                <div className={styles['edit-board-form__group']}>
+                    <label className={styles['edit-board-form__label']}>Selecciona miembros para añadir</label>
+                    {availableContacts.length === 0 ? (
+                        <p className={styles['edit-board-form__no-contacts']}>No hay contactos disponibles para añadir.</p>
+                    ) : (
+                        <div className={styles['edit-board-form__members-list']}>
+                            {availableContacts.map(contact => (
+                                <div key={contact._id} className={styles['edit-board-form__member-item']}>
+                                    <input
+                                        type="checkbox"
+                                        className={styles['edit-board-form__checkbox']}
+                                        id={contact._id}
+                                        checked={selectedMembers.includes(contact._id)}
+                                        onChange={() => handleSelectMember(contact._id)}
+                                    />
+                                    <label htmlFor={contact._id} className={styles['edit-board-form__member-label']}>
+                                        <span className={styles['edit-board-form__custom-checkbox']}></span>
+                                        {contact.name} ({contact.email})
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                {/* Botón para enviar el formulario */}
+                <button type="submit" className={styles['edit-board-form__button']}>Guardar Cambios</button>
             </form>
+
+            {/* Componente de notificaciones */}
+            <ToastContainer ref={toastRef} />
         </div>
     );
 };

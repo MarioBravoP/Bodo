@@ -116,7 +116,7 @@ const BoardPage = () => {
                 <div className={styles['board__title-container']}>
                     <h2 className={styles['board__title']}>{board.title}</h2>
                     {/* Solo el propietario puede editar el tablero */}
-                    {board.owner === user?._id && (
+                    {board.owner._id === user?._id && (
                         <button className={styles['board__edit-btn']} onClick={handleEditClick}>
                             Editar Tablero
                         </button>

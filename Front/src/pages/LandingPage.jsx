@@ -51,10 +51,10 @@ const LandingPage = () => {
 
         {/* Hero Section */}
         <div className={styles.landingPage__hero}>
-          <h1 className={styles.landingPage__heroTitle}>Gestor de Tableros</h1>
+          <h1 className={styles.landingPage__heroTitle}>Gestor Bōdo</h1>
           <p className={styles.landingPage__heroDescription}><span className={styles['italic-animated']}>Sencillo y eficiente,</span> porque no necesitas comerte el coco para empezar la semana.</p>
           <div className={styles.landingPage__heroImage}>
-            <img src="/assets/trama.svg" alt="Organiza tus tareas" />
+            <img src="/assets/trama.svg" alt="Organiza tus tareas"/>
           </div>
         </div>
 
@@ -64,7 +64,7 @@ const LandingPage = () => {
             <img src="/assets/organize-tasks.svg" alt="Organiza tus tareas" />
           </div>
           <div className={styles.landingPage__featuresContent}>
-            <h2 className={styles.landingPage__featuresTitle}>¿Qué puedes hacer aquí?</h2>
+            <h2 className={styles.landingPage__featuresTitle}>¿Qué puedes hacer en Bōdo?</h2>
             <p className={styles.landingPage__featuresText}>
               Crea tableros personalizados para tus proyectos, asigna tareas, define prioridades y
               colabora en tiempo real con tu equipo. Nuestra plataforma te permite mantener el control

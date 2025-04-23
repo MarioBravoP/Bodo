@@ -16,7 +16,8 @@
 }
 
 .header__logoImage {
-  height: 40px;
+  height: 2.5rem;
+  width: 7.5rem;
   width: auto;
   animation: fadeSlideIn 1s ease-out forwards;
   opacity: 0;
@@ -39,6 +40,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin: 0 1rem 0 0;
 }
 
 .header__navLinks {
