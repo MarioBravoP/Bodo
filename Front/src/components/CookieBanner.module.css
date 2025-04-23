@@ -1,0 +1,70 @@
+.cookieBanner {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 800px;
+  background-color: #2c2c2c;
+  color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  animation: slideUp 0.4s ease-out;
+}
+
+.cookieBanner__message {
+  font-size: 0.95rem;
+  margin-right: 1rem;
+  flex: 1;
+}
+
+.cookieBanner__button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cookieBanner__button:hover {
+  background-color: #43a047;
+}
+
+/* Animación de entrada */
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .cookieBanner {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .cookieBanner__message {
+    margin: 0 0 1rem 0;
+  }
+
+  .cookieBanner__button {
+    width: 100%;
+  }
+}

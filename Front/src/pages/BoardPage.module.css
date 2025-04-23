@@ -1,0 +1,291 @@
+/* Contenedor principal del encabezado del tablero */
+.board__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Contenedor del título y botón de editar */
+.board__title-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Título del tablero */
+.board__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+/* Botón de editar tablero */
+.board__edit-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  height: fit-content;
+}
+
+.board__edit-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Descripción del tablero */
+.board__description {
+  font-size: 1rem;
+  color: #666;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Contenedor de propietario y miembros */
+.board__owner-members {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Propietario */
+.board__owner-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.board__owner-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+/* Miembros */
+.board__members {
+  display: flex;
+  flex-direction: column;
+}
+
+.board__members-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.board__members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Estilos compartidos para propietario y miembros */
+.board__person-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.board__person-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.board__person-texts {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  /* Para evitar que los textos se rompan mal */
+}
+
+.board__person-name {
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.board__person-email {
+  font-size: 0.9rem;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* Sección de tareas */
+.board__tasks-section {
+  margin-top: 2rem;
+}
+
+/* Título de la sección de tareas */
+.board__tasks-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #444444;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Lista de tareas */
+.board__tasks-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+}
+
+/* Estilos de las tarjetas de tarea */
+.task-card {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover sobre la tarjeta de tarea */
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título de la tarjeta de tarea */
+.task-card h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #222222;
+  font-weight: bold;
+}
+
+/* Descripción de la tarjeta de tarea */
+.task-card p {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #555555;
+}
+
+/* Botón de crear nueva tarea */
+.board__create-task-btn {
+  background-color: #4CAF50;
+  /* Verde */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+  display: block;
+  /* Cambiado a block */
+  margin-left: auto;
+  /* Centrado */
+  margin-right: auto;
+  /* Centrado */
+}
+
+/* Hover en el botón de crear tarea */
+.board__create-task-btn:hover {
+  background-color: #45a049;
+}
+
+/* Estilo de botones del tablero (editar) */
+.board__edit-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
+  /* Menor margen superior */
+}
+
+/* Hover en el botón de editar */
+.board__edit-btn:hover {
+  background-color: #0056b3;
+}
+
+.no-tasks {
+  font-size: 1.2rem;
+  color: #888;
+  text-align: center;
+}
+
+.board__columns-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.board__column {
+  background-color: #f9fafb;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.board__column-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #333;
+}
+
+.board__tasks-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .board__owner-members {
+    gap: 1.5rem;
+  }
+
+  .board__members-list {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .board__person-item {
+    gap: 10px;
+  }
+
+  .board__person-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .board__person-name {
+    font-size: 0.95rem;
+  }
+
+  .board__person-email {
+    font-size: 0.85rem;
+  }
+}

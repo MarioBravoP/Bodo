@@ -1,0 +1,78 @@
+/* Login.module.css */
+
+/* Bloque principal del login */
+.login {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Título del formulario de login */
+.login__title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Formulario de login */
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Campos de entrada (correo y contraseña) */
+.login__input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+/* Modificador para inputs con error */
+.login__input--error {
+  border-color: red;
+}
+
+/* Botón de login */
+.login__button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+/* Efecto hover en el botón */
+.login__button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* Mensajes de error */
+.login__error {
+  color: red;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Estilos adicionales para el formulario */
+.login__form .login__input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.login__form .login__button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

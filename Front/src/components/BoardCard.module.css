@@ -1,0 +1,77 @@
+.board-card {
+  background-color: #ffffff;
+  padding: 2rem 1.5rem;
+  margin: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  max-width: 100%;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.board-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.board-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.board-card__title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.board-card__owner {
+  font-size: 1rem;
+  color: #007bff;
+  margin: 0;
+  font-weight: bold;
+}
+
+.board-card__body {
+  margin-bottom: 1.2rem;
+}
+
+.board-card__description {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.5;
+  margin: 0.5rem 0;
+}
+
+.board-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  color: #666;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.board-card__task-count {
+  font-weight: 600;
+  color: #28a745;
+}
+
+.board-card__task-count span {
+  font-size: 1.2rem;
+}
+
+.board-card__created-at span {
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}

@@ -1,0 +1,11 @@
+.layoutContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Esto asegura que el contenedor ocupe toda la altura de la pantalla */
+}
+
+.mainContent {
+  flex-grow: 1; /* Esto hace que el contenido se expanda para llenar el espacio restante */
+  padding: 2rem;
+  background-color: #f4f4f4; /* Puedes cambiar el fondo si lo necesitas */
+}

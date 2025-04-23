@@ -1,0 +1,68 @@
+.toastContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.toast {
+  pointer-events: all;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 90%;
+  width: 320px;
+}
+
+.toast p {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.1rem;
+  color: #333333;
+}
+
+.confirmButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.confirmButtons button {
+  padding: 0.5rem 1rem;
+  background-color: #0077ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.confirmButtons button:hover {
+  background-color: #005ccc;
+}
+
+/* Botón de cerrar cuando no es confirmación */
+.toast > button {
+  padding: 0.5rem 1rem;
+  background-color: #ff5555;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease-in-out;
+  margin-top: 1rem;
+}
+
+.toast > button:hover {
+  background-color: #cc0000;
+}

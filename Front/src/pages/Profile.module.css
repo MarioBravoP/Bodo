@@ -1,0 +1,213 @@
+:root {
+  --profile-max-width: 900px;
+}
+
+.profile-page {
+  max-width: var(--profile-max-width);
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Perfil del usuario */
+.profile-card {
+  background: #f1f1f1;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.profile-card__image-container {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 1rem;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+}
+
+.profile-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-card__title {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.profile-card__email {
+  color: #555;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.profile-card__link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.profile-card__link:hover {
+  text-decoration: underline;
+}
+
+/* Gestión de solicitudes y contactos */
+.friends-management {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Solicitudes */
+.friends-management__requests-column,
+.friends-management__contacts-column {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 1rem;  /* Separar las columnas */
+}
+
+.friends-management__title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.friends-management__send-request {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;  /* Aumentar el espacio entre los elementos */
+  margin-bottom: 1.5rem;  /* Espacio debajo de la sección de envío de solicitud */
+}
+
+.friends-management__input {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.friends-management__button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.friends-management__button:hover {
+  background-color: #45a049;
+}
+
+.friends-management__requests-list,
+.friends-management__contacts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.friends-management__request-item,
+.friends-management__contact-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem; /* Mayor espacio entre los items */
+  background: #fafafa;
+  padding: 0.75rem 1rem; /* Aumentar el padding para mayor separación */
+  border-radius: 8px;
+}
+
+.friends-management__request-buttons {
+  display: flex;
+  gap: 0.75rem;  /* Más espacio entre los botones */
+}
+
+.friends-management__request-item button {
+  padding: 0.5rem;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  width: 36px; /* Aumentar el tamaño del botón */
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.friends-management__request-item button:first-of-type {
+  background-color: #4caf50;
+  color: white;
+}
+
+.friends-management__request-item button:last-of-type {
+  background-color: #f44336;
+  color: white;
+}
+/* Animación de salida */
+.friends-management__fade-out {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+/* Imagen de contacto */
+.friends-management__contact-image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+/* Alinear la imagen a la izquierda y los datos a la derecha */
+.friends-management__contact-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  background: #fafafa;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+
+}
+
+.friends-management__contact-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  word-wrap: break-word;
+}
+
+/* Opcionalmente, puedes dar estilos a los datos */
+.friends-management__contact-info span {
+  display: block;
+  color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .friends-management {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 570px) {
+  .profile-page {
+    padding: 1rem;
+  }
+  .friends-management__contact-item {
+    padding: 0;
+  }
+}
+

@@ -1,0 +1,255 @@
+/* Header General */
+.header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.header__logoImage {
+  height: 40px;
+  width: auto;
+  animation: fadeSlideIn 1s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Navigation */
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header__navLinks {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Links para usuarios no logeados */
+.header__navLink {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+}
+
+.header__navLink:hover,
+.header__navLink:focus {
+  color: #007BFF;
+  outline: none;
+}
+
+/* Botón menú hamburguesa */
+.header__menuButton {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Profile & Dropdown */
+.header__profile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.header__profileImage {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+  transition: transform 0.3s ease;
+}
+
+.header__profileImage:hover,
+.header__profileImage:focus {
+  transform: scale(1.1);
+  outline: none;
+}
+
+/* Dropdown Menu */
+.header__dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 220px;
+  padding: 8px 0;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+.header__dropdown--closing {
+  animation: fadeOut 0.2s ease forwards;
+}
+
+.header__dropdownItem,
+.header__dropdownItemButton {
+  display: block;
+  padding: 14px 18px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.header__dropdownItem:hover,
+.header__dropdownItem:focus,
+.header__dropdownItemButton:hover,
+.header__dropdownItemButton:focus {
+  background-color: #f5f5f5;
+  color: #007BFF;
+  outline: none;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Botón de menú */
+.header__menuButton {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Responsive ajustes */
+@media (max-width: 768px) {
+  .header__logoImage {
+    height: 32px;
+  }
+
+  .header__navLinks {
+    display: none;
+    flex-direction: column;
+    background: #fff;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 999;
+  }
+
+  .header__navLinks--open {
+    display: flex;
+  }
+
+  .header__menuButton {
+    display: block;
+  }
+
+  .header__profileImage {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__logo {
+    font-size: 1.4rem;
+  }
+
+  .header__profileImage {
+    width: 45px;
+    height: 45px;
+  }
+
+  .header__dropdownItem,
+  .header__dropdownItemButton {
+    padding: 16px;
+    font-size: 17px;
+  }
+
+  .header__nav {
+    gap: 0.5rem;
+  }
+}
+
+@media (min-width: 2560px) {
+  .header__logo {
+    font-size: 2.5rem;
+  }
+
+  .header__profileImage {
+    width: 80px;
+    height: 80px;
+  }
+
+  .header__dropdown {
+    width: 260px;
+  }
+
+  .header__dropdownItem,
+  .header__dropdownItemButton {
+    font-size: 18px;
+    padding: 18px 22px;
+  }
+
+  .header__navLink {
+    font-size: 18px;
+  }
+}
