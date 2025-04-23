@@ -18,7 +18,7 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.footer__content}>
-        <p className={styles.footer__text}>© {new Date().getFullYear()} Gestor de Tableros Bodo. Creado por Mario Bravo Pineda para el proyecto final del módulo de FullStack de CEI</p>
+        <p className={styles.footer__text}>© {new Date().getFullYear()} Gestor de Tableros Bōdo. Creado por Mario Bravo Pineda para el proyecto final del módulo de FullStack de CEI</p>
       </div>
     </footer>
   );

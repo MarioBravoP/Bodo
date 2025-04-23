@@ -37,6 +37,7 @@ const ProfileEditPage = () => {
         email: '',
         profileImage: '',
     });
+    const maxNameLength = 60;
 
     const [newImageFile, setNewImageFile] = useState(null);
     const [previewImage, setPreviewImage] = useState('');
@@ -79,6 +80,11 @@ const ProfileEditPage = () => {
     // Enviar la actualización de perfil al servidor
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (userData.name.length > maxNameLength) {
+            toastRef.current?.addToast('No se puede superar el límite de caracteres.', 'error');
+        }
+
         try {
             let base64Image = null;
 
@@ -156,9 +162,13 @@ const ProfileEditPage = () => {
                             onChange={handleInputChange}
                             className={styles['profile-edit__input']}
                             required
+                            maxLength={maxNameLength}
                         />
                     </label>
                 </div>
+                {userData.name.length > maxNameLength && (
+                    <p className="error-message">Has llegado al límite de {maxNameLength} caracteres.</p>
+                )}
 
                 {/* Input de email solo lectura */}
                 <div className={styles['profile-edit__group']}>

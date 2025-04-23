@@ -22,9 +22,9 @@ import ToastContainer from '@/components/ToastContainer';
 import styles from './Login.module.css';
 
 const LoginPage = () => {
-  const navigate = useNavigate(); // Hook para redireccionar
-  const { login, user, loading } = useAuth(); // Obtener método de login y usuario autenticado
-  const toastContainerRef = useRef();  // Referencia para mostrar notificaciones
+  const navigate = useNavigate();
+  const { login, user, loading } = useAuth();
+  const toastContainerRef = useRef();
 
   // Estados para email y password
   const [email, setEmail] = useState('');

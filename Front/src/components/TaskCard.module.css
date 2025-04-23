@@ -18,6 +18,10 @@
   font-weight: bold;
   margin-bottom: 0.5rem;
   color: #333333;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  min-width: 0;
 }
 
 /* Prioridad */

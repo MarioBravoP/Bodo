@@ -27,8 +27,9 @@ import { formatDate } from '@/utils/formatDate';
 import styles from './TaskDetailsSidebar.module.css';
 
 const TaskSidebar = ({ task, onClose, onUpdate }) => {
-    // Hook personalizado que maneja las peticiones HTTP
     const { fetchData, loading } = useFetch();
+    const maxTitleLength = 40;
+    const maxDescriptionLength = 150;
 
     // Estado local para almacenar los valores editados de la tarea
     const [editedTask, setEditedTask] = useState({
@@ -54,11 +55,17 @@ const TaskSidebar = ({ task, onClose, onUpdate }) => {
     // Maneja el envío del formulario para actualizar la tarea
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (editedTask.description.length > maxDescriptionLength || editedTask.title.length > maxTitleLength) {
+            toastRef.current?.addToast('No se puede superar el límite de caracteres.', 'error');
+            return;
+        }
+
         try {
             const updatedTask = await fetchData(`/api/task/${task._id}`, 'PUT', editedTask);
             if (updatedTask) {
                 onUpdate('update', updatedTask.task); // Actualiza la tarea en el componente padre
-                onClose(); // Cierra el sidebar
+                onClose();
             }
         } catch (error) {
             console.error("Error al actualizar la tarea:", error);
@@ -67,13 +74,13 @@ const TaskSidebar = ({ task, onClose, onUpdate }) => {
 
     // Muestra el cuadro de confirmación para eliminar la tarea
     const handleDeleteClick = (e) => {
-        e.stopPropagation(); // Previene que el clic se propague
-        setShowConfirm(true); // Muestra el cuadro de confirmación
+        e.stopPropagation();
+        setShowConfirm(true);
     };
 
     // Cancela la acción de eliminación
     const handleCancelDelete = () => {
-        setShowConfirm(false); // Oculta el cuadro de confirmación
+        setShowConfirm(false);
     };
 
     // Confirma y elimina la tarea
@@ -81,7 +88,7 @@ const TaskSidebar = ({ task, onClose, onUpdate }) => {
         try {
             await fetchData(`/api/task/${task._id}`, 'DELETE'); // Elimina la tarea de la API
             onUpdate('delete', task); // Notifica al componente padre que se eliminó la tarea
-            onClose(); // Cierra el sidebar
+            onClose();
         } catch (error) {
             console.error("Error al eliminar la tarea:", error);
         }
@@ -101,6 +108,7 @@ const TaskSidebar = ({ task, onClose, onUpdate }) => {
                             value={editedTask.title}
                             onChange={handleChange}
                             required
+                            maxLength={maxTitleLength}
                         />
                     </div>
                     <div className={styles.formGroup}>
@@ -109,6 +117,7 @@ const TaskSidebar = ({ task, onClose, onUpdate }) => {
                             name="description"
                             value={editedTask.description || ''}
                             onChange={handleChange}
+                            maxLength={maxDescriptionLength}
                         />
                     </div>
                     <div className={styles.formGroup}>
@@ -138,11 +147,6 @@ const TaskSidebar = ({ task, onClose, onUpdate }) => {
                     Última actualización: {formatDate(task.updatedAt)}
                 </p>
 
-                {/* Botón de eliminar tarea */}
-                <button className={styles.deleteBtn} onClick={handleDeleteClick}>
-                    Eliminar Tarea
-                </button>
-
                 {/* Confirmación de eliminación */}
                 {showConfirm && (
                     <div className={styles.confirmationOverlay}>
@@ -153,6 +157,12 @@ const TaskSidebar = ({ task, onClose, onUpdate }) => {
                         </div>
                     </div>
                 )}
+
+                {/* Botón de eliminar tarea */}
+                <button className={styles.deleteBtn} onClick={handleDeleteClick}>
+                    Eliminar Tarea
+                </button>
+
             </div>
         </div>
     );
