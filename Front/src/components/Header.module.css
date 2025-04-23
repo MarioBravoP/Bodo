@@ -2,10 +2,10 @@
 .header {
   background-color: #ffffff;
   border-bottom: 1px solid #ddd;
-  padding: 10px 20px;
+  padding: 0.6rem 1.4rem;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 10;
 }
 
 .header__content {
@@ -40,7 +40,6 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin: 0 1rem 0 0;
 }
 
 .header__navLinks {
@@ -85,8 +84,8 @@
 }
 
 .header__profileImage {
-  width: 65px;
-  height: 65px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #ddd;
@@ -237,8 +236,8 @@
   }
 
   .header__profileImage {
-    width: 80px;
-    height: 80px;
+    width: 65px;
+    height: 65px;
   }
 
   .header__dropdown {

@@ -29,7 +29,9 @@ const TaskFormPage = () => {
 
     // Estados locales para almacenar los datos del formulario
     const [title, setTitle] = useState('');
+    const maxTitleLength = 40;
     const [description, setDescription] = useState('');
+    const maxDescriptionLength = 150;
     const [priority, setPriority] = useState('low');
     const [status, setStatus] = useState('todo');
 
@@ -93,6 +95,9 @@ const TaskFormPage = () => {
                         required
                     />
                 </div>
+                {title.length === maxTitleLength && (
+                    <p className="error-message">Has llegado al límite de {maxTitleLength} caracteres.</p>
+                )}
 
                 {/* Campo: Descripción */}
                 <div className={styles['task-form__input-group']}>
@@ -103,6 +108,9 @@ const TaskFormPage = () => {
                         onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
+                {description.length == maxDescriptionLength && (
+                    <p className="error-message">Has llegado al límite de {maxDescriptionLength} caracteres.</p>
+                )}
 
                 {/* Campo: Prioridad */}
                 <div className={styles['task-form__input-group']}>
