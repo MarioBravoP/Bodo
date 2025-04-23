@@ -31,8 +31,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import useFetch from '@/hooks/useFetch';
 import styles from './BoardPage.module.css';
 import { useAuth } from '@/contexts/AuthContext';
-import TaskCard from '@/components/TaskCard'; 
-import TaskDetailsSidebar from '@/components/TaskDetailsSidebar'; 
+import TaskCard from '@/components/TaskCard';
+import TaskDetailsSidebar from '@/components/TaskDetailsSidebar';
 import { handleDrop, handleDragOver } from '@/utils/dragAndDropUtils';
 
 const BoardPage = () => {
@@ -170,7 +170,9 @@ const BoardPage = () => {
 
             <section className={styles['board__tasks-section']}>
                 <h3 className={styles['board__tasks-title']}>Tareas</h3>
-
+                <button className={styles['board__create-task-btn']} onClick={() => navigate(`/create-task/${boardId}`)}>
+                    Crear Nueva Tarea
+                </button>
                 <div className={styles['board__columns-container']}>
                     {/* Renderizar las tareas por estado */}
                     <div
@@ -230,10 +232,6 @@ const BoardPage = () => {
                         </ul>
                     </div>
                 </div>
-
-                <button className={styles['board__create-task-btn']} onClick={() => navigate(`/create-task/${boardId}`)}>
-                    Crear Nueva Tarea
-                </button>
             </section>
 
             {/* Sidebar para ver los detalles de la tarea seleccionada */}

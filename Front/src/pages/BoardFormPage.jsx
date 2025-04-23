@@ -29,13 +29,14 @@ import styles from './BoardForm.module.css';
 import ToastContainer from '@/components/ToastContainer';
 
 const CreateBoardPage = () => {
-  // Estados para manejar los campos del formulario y otros datos
-  const [title, setTitle] = useState('');  // Título del tablero
-  const [description, setDescription] = useState('');  // Descripción del tablero
-  const [selectedMembers, setSelectedMembers] = useState([]);  // Miembros seleccionados para el tablero
-  const [contacts, setContacts] = useState([]);  // Contactos del usuario
-  const { fetchData, loading, error } = useFetch();  // Hook de fetch para hacer solicitudes
-  const toastRef = useRef();  // Referencia para mostrar notificaciones
+  const [title, setTitle] = useState('');
+  const maxTitleLength = 40;
+  const [description, setDescription] = useState('');
+  const maxDescriptionLength = 150;
+  const [selectedMembers, setSelectedMembers] = useState([]);
+  const [contacts, setContacts] = useState([]);
+  const { fetchData, loading, error } = useFetch();
+  const toastRef = useRef();
 
   // Cargar los contactos del usuario cuando se monta el componente
   useEffect(() => {
@@ -67,14 +68,14 @@ const CreateBoardPage = () => {
 
   // Manejar el envío del formulario
   const handleSubmit = async (e) => {
-    e.preventDefault();  // Evitar el comportamiento por defecto del formulario (recargar la página)
+    e.preventDefault(); 
 
     try {
       // Enviar los datos del tablero al backend
       await fetchData('/api/board/create', 'POST', {
         title,
         description,
-        members: selectedMembers,  // Miembros seleccionados
+        members: selectedMembers,
       });
 
       // Mostrar notificación de éxito
@@ -86,7 +87,7 @@ const CreateBoardPage = () => {
       setSelectedMembers([]);
     } catch (err) {
       console.error(err);  // Manejar errores
-      toastRef.current?.addToast('Hubo un problema al crear el tablero.', 'error');  // Mostrar notificación de error
+      toastRef.current?.addToast('Hubo un problema al crear el tablero.', 'error'); 
     }
   };
 
@@ -103,18 +104,24 @@ const CreateBoardPage = () => {
             value={title}
             onChange={e => setTitle(e.target.value)}  // Actualizar el título al cambiar
             required
-            maxLength={40}  // Limitar el máximo de caracteres a 40
+            maxLength={maxTitleLength}  // Limitar el máximo de caracteres a 40
             className={styles['board-form__input']}
           />
-
+          {title.length === maxTitleLength && (
+            <p className="error-message">Has llegado al límite de {maxTitleLength} caracteres.</p>
+          )}
+          
           {/* Campo para ingresar la descripción del tablero */}
           <label className={styles['board-form__label']}>Descripción:</label>
           <textarea
             value={description}
             onChange={e => setDescription(e.target.value)}  // Actualizar la descripción al cambiar
-            maxLength={150}  // Limitar el máximo de caracteres a 150
+            maxLength={maxDescriptionLength}  // Limitar el máximo de caracteres a 150
             className={styles['board-form__textarea']}
           />
+          {description.length == maxDescriptionLength && (
+            <p className="error-message">Has llegado al límite de {maxDescriptionLength} caracteres.</p>
+          )}
 
           {/* Selección de miembros para el tablero */}
           <div className={styles['board-form__member-selection']}>

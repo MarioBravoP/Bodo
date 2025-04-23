@@ -188,6 +188,7 @@ body {
   flex-direction: column;
   height: 100%;
   margin: 0;
+  overflow-x: hidden;
 }
 
 /* Contenedor principal que ocupa el 100% de la altura de la pantalla */
@@ -234,4 +235,29 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Scrollbar */
+* {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--color-primary) var(--color-background-light); /* Firefox */
+}
+
+/* Scrollbar para Webkit (Chrome, Edge, Safari) */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-background-light);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  border-radius: 8px;
+  border: 2px solid var(--color-background-light);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary-dark);
 }
