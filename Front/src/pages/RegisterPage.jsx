@@ -30,6 +30,10 @@ const RegisterPage = () => {
     password: '',
   });
 
+  const maxNameLength = 60;
+  const maxEmailLength = 60;
+  const maxPasswordLength = 40;
+
   const [success, setSuccess] = useState(false);
 
   // Manejar cambios en los inputs del formulario
@@ -43,6 +47,11 @@ const RegisterPage = () => {
     e.preventDefault();
     setSuccess(false);
 
+    if (formData.name.length > maxNameLength || formData.email.length > maxEmailLength || formData.password.length > maxPasswordLength) {
+      toastRef.current?.addToast('No se puede superar el límite de caracteres.', 'error');
+      return;
+    }
+
     // Validar que no haya campos vacíos
     if (!formData.name || !formData.email || !formData.password) {
       toastRef.current?.addToast('Todos los campos son obligatorios', 'error');
@@ -54,7 +63,7 @@ const RegisterPage = () => {
       await fetchData('/api/auth/register', 'POST', formData);
       setSuccess(true);
       toastRef.current?.addToast('Usuario creado con éxito', 'success');
-      setFormData({ name: '', email: '', password: '' }); // Limpiar formulario tras éxito
+      setFormData({ name: '', email: '', password: '' });
     } catch (err) {
       toastRef.current?.addToast('Error al crear usuario', 'error');
     }
@@ -76,7 +85,11 @@ const RegisterPage = () => {
             onChange={handleChange}
             className={styles.register__input}
             required
+            maxLength={maxNameLength}
           />
+          {formData.name.length > maxNameLength && (
+            <p className="error-message">Has llegado al límite de {maxNameLength} caracteres.</p>
+          )}
           <input
             type="email"
             name="email"
@@ -85,7 +98,11 @@ const RegisterPage = () => {
             onChange={handleChange}
             className={styles.register__input}
             required
+            maxLength={maxEmailLength}
           />
+          {formData.email.length > maxEmailLength && (
+            <p className="error-message">Has llegado al límite de {maxEmailLength} caracteres.</p>
+          )}
           <input
             type="password"
             name="password"
@@ -94,7 +111,11 @@ const RegisterPage = () => {
             onChange={handleChange}
             className={styles.register__input}
             required
+            maxLength={maxPasswordLength}
           />
+          {formData.password.length > maxPasswordLength && (
+            <p className="error-message">La contraseña no puede tener más de {maxPasswordLength} caracteres.</p>
+          )}
           <button
             type="submit"
             className={styles.register__button}

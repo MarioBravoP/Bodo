@@ -32,15 +32,15 @@ import bcrypt from "bcrypt";
 // Definición del esquema para el usuario
 const UserSchema = new mongoose.Schema({
     // Nombre del usuario, obligatorio y sin espacios adicionales
-    name: { type: String, required: true, trim: true },
+    name: { type: String, required: true, trim: true , maxlength: [60, "El nombre no puede tener más de 40 caracteres"],},
     // Correo electrónico del usuario, obligatorio y único
-    email: { type: String, required: true, unique: true, trim: true },
+    email: { type: String, required: true, unique: true, trim: true, maxlength: [60, "El email no puede tener más de 40 caracteres"], },
     // Imagen de perfil, es opcional
     profileImage: { type: String, default: "" },
     // ID público de la imagen de perfil, utilizado por servicios externos
     profileImagePublicId: { type: String, default: "" },
     // Contraseña del usuario, es obligatoria
-    password: { type: String, required: true },
+    password: { type: String, required: true, maxlength: [40, "La password no puede tener más de 40 caracteres"], },
     // Lista de contactos, que son referencias a otros usuarios
     contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     // Solicitudes pendientes de amistad, cada solicitud tiene un usuario y un estado

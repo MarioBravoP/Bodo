@@ -30,19 +30,21 @@ import ToastContainer from '@/components/ToastContainer';
 const EditBoardPage = () => {
     // Obtener el ID del tablero desde los parámetros de la URL
     const { boardId } = useParams();
-    
+
     // Obtener los datos, error y estado de carga para las solicitudes a la API
     const { data, error, loading, fetchData } = useFetch();
-    
+
     // Función para redirigir después de guardar los cambios
     const navigate = useNavigate();
-    
+
     // Referencia para el contenedor de notificaciones (Toast)
     const toastRef = useRef();
 
     // Estado para manejar los valores del formulario
     const [title, setTitle] = useState('');
+    const maxTitleLength = 40;
     const [description, setDescription] = useState('');
+    const maxDescriptionLength = 150;
     const [currentMembers, setCurrentMembers] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [selectedMembers, setSelectedMembers] = useState([]);
@@ -80,6 +82,9 @@ const EditBoardPage = () => {
     // Manejo del envío del formulario para actualizar el tablero
     const handleSubmit = async (e) => {
         e.preventDefault();  // Prevenir comportamiento por defecto del formulario
+        if (description.length > maxDescriptionLength || title.length > maxTitleLength) {
+            toastRef.current?.addToast('No se puede superar el límite de caracteres.', 'error');
+        }
 
         // Crear el objeto con los datos actualizados del tablero
         const updatedBoard = {
@@ -133,8 +138,12 @@ const EditBoardPage = () => {
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
+                        maxLength={maxTitleLength}
                     />
                 </div>
+                {title.length > maxTitleLength && (
+                    <p className="error-message">Has llegado al límite de {maxTitleLength} caracteres.</p>
+                )}
 
                 {/* Campo de Descripción */}
                 <div className={styles['edit-board-form__group']}>
@@ -143,8 +152,12 @@ const EditBoardPage = () => {
                         className={styles['edit-board-form__textarea']}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        maxLength={maxDescriptionLength}
                     />
                 </div>
+                {description.length > maxDescriptionLength && (
+                    <p className="error-message">Has llegado al límite de {maxDescriptionLength} caracteres.</p>
+                )}
 
                 {/* Selección de Miembros */}
                 <div className={styles['edit-board-form__group']}>

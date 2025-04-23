@@ -47,7 +47,6 @@ const CreateBoardPage = () => {
           setContacts(result);  // Si hay contactos, guardarlos en el estado
         }
       } catch (err) {
-        console.error("Error al cargar contactos:", err);  // Manejar errores de carga
         toastRef.current?.addToast('Error al cargar contactos.', 'error');  // Mostrar notificación de error
       }
     };
@@ -71,6 +70,9 @@ const CreateBoardPage = () => {
     e.preventDefault(); 
 
     try {
+      if (title.length > maxTitleLength || description.length > maxDescriptionLength) {
+        toastRef.current?.addToast('No se puede superar el límite de caracteres.', 'error')
+      }
       // Enviar los datos del tablero al backend
       await fetchData('/api/board/create', 'POST', {
         title,
@@ -104,22 +106,22 @@ const CreateBoardPage = () => {
             value={title}
             onChange={e => setTitle(e.target.value)}  // Actualizar el título al cambiar
             required
-            maxLength={maxTitleLength}  // Limitar el máximo de caracteres a 40
+            maxLength={maxTitleLength}
             className={styles['board-form__input']}
           />
-          {title.length === maxTitleLength && (
+          {title.length > maxTitleLength && (
             <p className="error-message">Has llegado al límite de {maxTitleLength} caracteres.</p>
           )}
-          
+
           {/* Campo para ingresar la descripción del tablero */}
           <label className={styles['board-form__label']}>Descripción:</label>
           <textarea
             value={description}
             onChange={e => setDescription(e.target.value)}  // Actualizar la descripción al cambiar
-            maxLength={maxDescriptionLength}  // Limitar el máximo de caracteres a 150
+            maxLength={maxDescriptionLength}
             className={styles['board-form__textarea']}
           />
-          {description.length == maxDescriptionLength && (
+          {description.length > maxDescriptionLength && (
             <p className="error-message">Has llegado al límite de {maxDescriptionLength} caracteres.</p>
           )}
 

@@ -53,6 +53,11 @@ const TaskFormPage = () => {
             return;
         }
 
+        if (description.length > maxDescriptionLength || title.length > maxTitleLength) {
+            toastRef.current?.addToast('No se puede superar el límite de caracteres.', 'error');
+            return;
+        }
+
         // Preparar datos para el envío
         const taskData = {
             title: title.trim(),
@@ -65,7 +70,6 @@ const TaskFormPage = () => {
         try {
             const response = await fetchData('/api/task/create', 'POST', taskData);
             if (response) {
-                toastRef.current?.addToast('Tarea creada con éxito.', 'success');
                 navigate(`/board/${boardId}`);
             }
         } catch (error) {
@@ -93,9 +97,10 @@ const TaskFormPage = () => {
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
+                        maxLength={maxTitleLength}
                     />
                 </div>
-                {title.length === maxTitleLength && (
+                {title.length > maxTitleLength && (
                     <p className="error-message">Has llegado al límite de {maxTitleLength} caracteres.</p>
                 )}
 
@@ -106,9 +111,10 @@ const TaskFormPage = () => {
                         className={styles['task-form__textarea']}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        maxLength={maxDescriptionLength}
                     />
                 </div>
-                {description.length == maxDescriptionLength && (
+                {description.length > maxDescriptionLength && (
                     <p className="error-message">Has llegado al límite de {maxDescriptionLength} caracteres.</p>
                 )}
 
