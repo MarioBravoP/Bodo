@@ -150,7 +150,7 @@ export const updateBoard = async (req, res) => {
             return res.status(403).json({ message: "Solo el creador puede editar este tablero" });
         }
 
-        const { title, description, backgroundImage, members } = req.body;
+        const { title, description, members } = req.body;
 
         // Actualizar los campos si se proporcionan
         if (title) board.title = title;

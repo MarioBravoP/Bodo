@@ -39,7 +39,7 @@ const BoardCard = ({ board }) => {
     <li className={styles['board-card']} onClick={handleClick}>
       {/* Header - Nombre y Owner */}
       <div className={styles['board-card__header']}>
-        <h4 className={styles['board-card__title']}>{board.title}</h4> {/* Título del tablero */}
+        <h3 className={styles['board-card__title']}>{board.title}</h3> {/* Título del tablero */}
         <p className={styles['board-card__owner']}>
           {board.owner?.name || 'Desconocido'} {/* Nombre del propietario, si existe */}
         </p>
