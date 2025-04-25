@@ -98,7 +98,7 @@ const EditBoardPage = () => {
             await fetchData(`/api/board/${boardId}`, 'PUT', updatedBoard);
             navigate(`/board/${boardId}`);  // Redirigir al usuario al tablero después de guardar los cambios
         } catch (err) {
-            console.error("Error al editar el tablero:", err);
+            toastRef.current?.addToast('Error al editar el tablero.', 'error');
         }
     };
 
@@ -113,6 +113,22 @@ const EditBoardPage = () => {
             }
         });
     };
+
+    // Manejo del borrado de tablero
+    const handleDelete = async () => {
+        toastRef.current?.addToast('¿Estás seguro de que deseas eliminar el tablero y todas sus tareas?.', 'error', async (confirm) => {
+                if (confirm) {
+                    try {
+                        await fetchData(`/api/board/${boardId}`, 'DELETE');
+                        navigate('/'); // Redirige después de eliminar el tablero
+                    } catch (err) {
+                        toastRef.current?.addToast('Error al eliminar el tablero.', 'error');
+                    }
+                }
+            }
+        );
+    };
+
 
     // Mostrar mensaje de carga mientras los datos están siendo procesados
     if (loading) return <p>Cargando formulario de edición...</p>;
@@ -184,6 +200,13 @@ const EditBoardPage = () => {
                         </div>
                     )}
                 </div>
+                <button
+                    type="button"
+                    className={styles['edit-board-form__delete-button']}
+                    onClick={handleDelete}
+                >
+                    Eliminar Tablero
+                </button>
 
                 {/* Botón para enviar el formulario */}
                 <button type="submit" className={styles['edit-board-form__button']}>Guardar Cambios</button>

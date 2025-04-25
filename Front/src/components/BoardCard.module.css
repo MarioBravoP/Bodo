@@ -44,6 +44,8 @@
   color: var(--color-primary);
   margin: 0;
   font-weight: bold;
+  align-self: flex-start;
+  padding: var(--spacing-xs);
 }
 
 .board-card__body {

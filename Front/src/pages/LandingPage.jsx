@@ -20,7 +20,7 @@
  * 
  *---------------------------------------------------------------*/
 
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import useFetch from '@/hooks/useFetch';
@@ -38,12 +38,19 @@ const LandingPage = () => {
   // Referencia para el contenedor de notificaciones (Toast)
   const toastRef = useRef(null);
 
+  // Estado para filtrar tableros
+  const [searchTerm, setSearchTerm] = useState('');
+
   // Efecto para cargar los tableros del usuario después de que se haya autenticado
   useEffect(() => {
     if (!authLoading && user) {
       fetchData('/api/board');
     }
   }, [authLoading, user]);
+
+  const filteredBoards = boards?.filter(board =>
+    board.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -54,7 +61,7 @@ const LandingPage = () => {
           <h1 className={styles.landingPage__heroTitle}>Gestor Bōdo</h1>
           <p className={styles.landingPage__heroDescription}><span className={styles['italic-animated']}>Sencillo y eficiente,</span> porque no necesitas comerte el coco para empezar la semana.</p>
           <div className={styles.landingPage__heroImage}>
-            <img src="/assets/flechas.svg" alt="Organiza tus tareas"/>
+            <img src="/assets/flechas.svg" alt="Organiza tus tareas" />
           </div>
         </div>
 
@@ -78,25 +85,39 @@ const LandingPage = () => {
         <section className={styles.landingPage__dynamicSection}>
           {authLoading ? (
             <p className={styles.landingPage__loadingText}>Cargando...</p>  // Mostrar cuando se está cargando el estado de autenticación
-          ) : user ? ( 
+          ) : user ? (
             <div className={styles.landingPage__boardsSection}>
               <h2 className={styles.landingPage__boardsSectionTitle}>Mis Tableros</h2>
               {boardsLoading ? (
                 <p className={styles.landingPage__loadingText}>Cargando tableros...</p>  // Mostrar cuando se están cargando los tableros
-              ) : boards && boards.length > 0 ? (  // Si hay tableros disponibles
-                <ul className={styles.landingPage__boardList}>
-                  {boards.map((board) => (
-                    <BoardCard key={board._id} board={board} />  // Mostrar una tarjeta por cada tablero
-                  ))}
-                </ul>
+              ) : filteredBoards && boards.length > 0 ? (  // Si hay tableros disponibles
+                <>
+                  <div className={styles.landingPage__boardsHeader}>
+                    <input
+                      type="text"
+                      placeholder="Buscar por título..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className={styles.landingPage__searchInput}
+                    />
+                    <Link to="/new_board" className={styles.landingPage__createButton}>
+                      Crear Tablero  {/* Botón para crear un nuevo tablero */}
+                    </Link>
+                  </div>
+                  <ul className={styles.landingPage__boardList}>
+                    {filteredBoards.map(board => (
+                      <BoardCard key={board._id} board={board} />
+                    ))}
+                  </ul>
+                </>
               ) : (
                 <div className={styles.landingPage__noBoards}>
                   <p className={styles.landingPage__noBoardsText}>No tienes tableros todavía. ¡Crea el primero!</p>
+                  <Link to="/new_board" className={styles.landingPage__createButton}>
+                    Crear Tablero
+                  </Link>
                 </div>
               )}
-              <Link to="/new_board" className={styles.landingPage__createButton}>
-                Crear Tablero  {/* Botón para crear un nuevo tablero */}
-              </Link>
             </div>
           ) : (  // Si el usuario no está autenticado
             <div className={styles.landingPage__notLoggedIn}>

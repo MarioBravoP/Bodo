@@ -57,7 +57,9 @@ const LoginPage = () => {
     }
 
     try {
-      const result = await login(email, password); // Llamada al login
+      
+      const normalizedEmail = email.trim().toLowerCase();
+      const result = await login(normalizedEmail, password);
 
       if (result.success) {
         navigate('/');
