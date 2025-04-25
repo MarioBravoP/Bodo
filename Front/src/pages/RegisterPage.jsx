@@ -16,11 +16,13 @@
 \*---------------------------------------------------------------*/
 
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useFetch from '@/hooks/useFetch';
 import ToastContainer from '@/components/ToastContainer';
 import styles from './Register.module.css';
 
 const RegisterPage = () => {
+  const navigate = useNavigate()
   const { fetchData, loading, error } = useFetch();
   const toastRef = useRef(null);
 
@@ -59,11 +61,17 @@ const RegisterPage = () => {
     }
 
     try {
+      // Normalizamos el email (trim + toLowerCase)
+      const normalizedData = {
+        ...formData,
+        email: formData.email.trim().toLowerCase(),
+      };
       // Realizar solicitud de registro
-      await fetchData('/api/auth/register', 'POST', formData);
+      await fetchData('/api/auth/register', 'POST', normalizedData);
       setSuccess(true);
       toastRef.current?.addToast('Usuario creado con éxito', 'success');
       setFormData({ name: '', email: '', password: '' });
+      setTimeout(() => navigate("/login"), 2000)
     } catch (err) {
       toastRef.current?.addToast('Error al crear usuario', 'error');
     }
@@ -72,7 +80,6 @@ const RegisterPage = () => {
   return (
     <>
       <div className={styles.register}>
-
         <h2 className={styles.register__title}>Crear nuevo usuario</h2>
 
         {/* Formulario de registro */}
