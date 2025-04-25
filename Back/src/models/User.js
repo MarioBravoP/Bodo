@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema({
     // ID público de la imagen de perfil, utilizado por servicios externos
     profileImagePublicId: { type: String, default: "" },
     // Contraseña del usuario, es obligatoria
-    password: { type: String, required: true, maxlength: [40, "La password no puede tener más de 40 caracteres"], },
+    password: { type: String, required: true },
     // Lista de contactos, que son referencias a otros usuarios
     contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     // Solicitudes pendientes de amistad, cada solicitud tiene un usuario y un estado

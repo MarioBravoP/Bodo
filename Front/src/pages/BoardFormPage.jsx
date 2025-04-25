@@ -42,25 +42,25 @@ const CreateBoardPage = () => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const result = await fetchData('/api/user/contacts', 'GET');  // Obtener contactos del backend
+        const result = await fetchData('/api/user/contacts', 'GET');
         if (Array.isArray(result) && result.length > 0) {
-          setContacts(result);  // Si hay contactos, guardarlos en el estado
+          setContacts(result);
         }
       } catch (err) {
-        toastRef.current?.addToast('Error al cargar contactos.', 'error');  // Mostrar notificación de error
+        toastRef.current?.addToast('Error al cargar contactos.', 'error');
       }
     };
 
-    fetchContacts();  // Llamar a la función para cargar los contactos
-  }, []);  // Solo se ejecuta una vez al montar el componente
+    fetchContacts();
+  }, []);
 
   // Manejar la selección de un miembro para el tablero
   const handleSelectMember = (memberId) => {
     setSelectedMembers(prevMembers => {
       if (prevMembers.includes(memberId)) {
-        return prevMembers.filter(id => id !== memberId);  // Si el miembro ya está seleccionado, lo eliminamos
+        return prevMembers.filter(id => id !== memberId);
       } else {
-        return [...prevMembers, memberId];  // Si no está seleccionado, lo añadimos
+        return [...prevMembers, memberId];
       }
     });
   };
@@ -88,7 +88,7 @@ const CreateBoardPage = () => {
       setDescription('');
       setSelectedMembers([]);
     } catch (err) {
-      console.error(err);  // Manejar errores
+      console.error(err);
       toastRef.current?.addToast('Hubo un problema al crear el tablero.', 'error'); 
     }
   };
@@ -104,7 +104,7 @@ const CreateBoardPage = () => {
           <input
             type="text"
             value={title}
-            onChange={e => setTitle(e.target.value)}  // Actualizar el título al cambiar
+            onChange={e => setTitle(e.target.value)}
             required
             maxLength={maxTitleLength}
             className={styles['board-form__input']}
@@ -117,7 +117,7 @@ const CreateBoardPage = () => {
           <label className={styles['board-form__label']}>Descripción:</label>
           <textarea
             value={description}
-            onChange={e => setDescription(e.target.value)}  // Actualizar la descripción al cambiar
+            onChange={e => setDescription(e.target.value)}
             maxLength={maxDescriptionLength}
             className={styles['board-form__textarea']}
           />
@@ -129,7 +129,7 @@ const CreateBoardPage = () => {
           <div className={styles['board-form__member-selection']}>
             <label className={styles['board-form__label']}>Selecciona los miembros:</label>
             {contacts.length === 0 ? (
-              <p className={styles['board-form__no-contacts']}>No tienes contactos disponibles.</p>  // Mensaje si no hay contactos
+              <p className={styles['board-form__no-contacts']}>No tienes contactos disponibles.</p>
             ) : (
               <div className={styles['board-form__members-list']}>
                 {contacts.map(contact => (
@@ -137,8 +137,8 @@ const CreateBoardPage = () => {
                     <input
                       type="checkbox"
                       id={contact._id}
-                      checked={selectedMembers.includes(contact._id)}  // Marcar el checkbox si el miembro está seleccionado
-                      onChange={() => handleSelectMember(contact._id)}  // Llamar a la función para seleccionar/deseleccionar
+                      checked={selectedMembers.includes(contact._id)}
+                      onChange={() => handleSelectMember(contact._id)}
                       className={styles['board-form__checkbox']}
                     />
                     <label htmlFor={contact._id} className={styles['board-form__member-label']}>
