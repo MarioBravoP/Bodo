@@ -41,9 +41,9 @@ const LandingPage = () => {
   // Efecto para cargar los tableros del usuario después de que se haya autenticado
   useEffect(() => {
     if (!authLoading && user) {
-      fetchData('/api/board');  // Hacer una solicitud para obtener los tableros del usuario
+      fetchData('/api/board');
     }
-  }, [authLoading, user]);  // Ejecutar el efecto cuando cambian `authLoading` o `user`
+  }, [authLoading, user]);
 
   return (
     <>
@@ -54,14 +54,14 @@ const LandingPage = () => {
           <h1 className={styles.landingPage__heroTitle}>Gestor Bōdo</h1>
           <p className={styles.landingPage__heroDescription}><span className={styles['italic-animated']}>Sencillo y eficiente,</span> porque no necesitas comerte el coco para empezar la semana.</p>
           <div className={styles.landingPage__heroImage}>
-            <img src="/assets/trama.svg" alt="Organiza tus tareas"/>
+            <img src="/assets/flechas.svg" alt="Organiza tus tareas"/>
           </div>
         </div>
 
         {/* Descripción de la Aplicación */}
         <section className={styles.landingPage__features}>
           <div className={styles.landingPage__featuresImage}>
-            <img src="/assets/organize-tasks.svg" alt="Organiza tus tareas" />
+            <img src="/assets/ilu-conect.svg" alt="Organiza tus tareas" />
           </div>
           <div className={styles.landingPage__featuresContent}>
             <h2 className={styles.landingPage__featuresTitle}>¿Qué puedes hacer en Bōdo?</h2>
@@ -78,7 +78,7 @@ const LandingPage = () => {
         <section className={styles.landingPage__dynamicSection}>
           {authLoading ? (
             <p className={styles.landingPage__loadingText}>Cargando...</p>  // Mostrar cuando se está cargando el estado de autenticación
-          ) : user ? (  // Si el usuario está autenticado
+          ) : user ? ( 
             <div className={styles.landingPage__boardsSection}>
               <h2 className={styles.landingPage__boardsSectionTitle}>Mis Tableros</h2>
               {boardsLoading ? (

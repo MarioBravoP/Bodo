@@ -179,7 +179,8 @@ body {
   /* Evitamos que el texto se desborde */
   hyphens: auto;
   /* La tipografía es más limpia en macOS */
-  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   /* La tipografía es más limpia en macOS */
   -webkit-font-smoothing: antialiased;
   /* La tipografía es más limpia en macOS */
