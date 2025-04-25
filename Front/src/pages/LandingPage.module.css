@@ -71,15 +71,17 @@
 
 .landingPage__heroImage {
   position: absolute;
-  right: -49px;
-  bottom: -195px;
+  right: -204px;
+  bottom: -180px;
   z-index: 1;
   pointer-events: none;
+  transform: translateX(-150px);
 }
 
 .landingPage__heroImage img {
-  height: 35rem;
-  width: 35rem;
+  height: 640px;
+  width: 640px;
+  object-fit: contain;
   pointer-events: none;
 }
 
@@ -268,13 +270,13 @@
   }
 
   .landingPage__heroImage {
-    right: -43px;
-    bottom: -169px;
+    right: -196px;
+    bottom: -160px;
   }
 
   .landingPage__heroImage img {
-    height: 30rem;
-    width: 30rem;
+    height: 560px;
+    width: 560px;
   }
 }
 
@@ -327,14 +329,14 @@
   }
 
   .landingPage__heroImage {
-    right: -34px;
-    bottom: -126px;
+    right: -189px;
+    bottom: -136px;
     opacity: 0.3;
   }
 
   .landingPage__heroImage img {
-    height: 22rem;
-    width: 22rem;
+    height: 480px;
+    width: 480px;
   }
 }
 .landingPage__featuresImage img {
