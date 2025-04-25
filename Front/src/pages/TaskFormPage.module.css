@@ -56,7 +56,7 @@
 
 .task-form__button {
   padding: 0.9rem;
-  background-color: #007bff;
+  background-color: var(--color-primary);
   color: white;
   font-weight: bold;
   border: none;
@@ -67,5 +67,5 @@
 }
 
 .task-form__button:hover {
-  background-color: #0056b3;
+  background-color: var(--color-primary-dark);
 }

@@ -1,6 +1,8 @@
 /* Estructura Principal */
 .board {
   padding: 2rem;
+  max-width: 120rem;
+  margin: 0 auto;
 }
 
 .board__header {
