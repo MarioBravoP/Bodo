@@ -29,11 +29,11 @@ import useFetch from "@/hooks/useFetch";
 import ToastContainer from "@/components/ToastContainer";
 
 const AdminDashboard = () => {
-  const { fetchData, loading } = useFetch();  // Usamos nuestro hook de fetch
-  const [users, setUsers] = useState([]);  // Estado para la lista de usuarios
-  const [currentPage, setCurrentPage] = useState(1);  // Estado para la página actual
-  const usersPerPage = 5;  // Número de usuarios a mostrar por página
-  const toastRef = useRef();  // Referencia al ToastContainer para mostrar notificaciones
+  const { fetchData, loading } = useFetch();
+  const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 5;
+  const toastRef = useRef();
 
   // Cargar usuarios al inicializar el componente
   useEffect(() => {
@@ -52,14 +52,14 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     try {
       const data = await fetchData('/api/user/admin', 'GET', null, {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,  // Obtener el token desde el localStorage
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       });
       if (data) {
-        const sortedUsers = data.sort((a, b) => a.name.localeCompare(b.name));  // Ordenar usuarios por nombre
-        setUsers(sortedUsers);  // Guardar los usuarios ordenados
+        const sortedUsers = data.sort((a, b) => a.name.localeCompare(b.name));
+        setUsers(sortedUsers);
       }
     } catch (error) {
-      toastRef.current?.addToast("Error al cargar usuarios", "error");  // Mostrar error si no se puede obtener la lista
+      toastRef.current?.addToast("Error al cargar usuarios", "error"); 
     }
   };
 
@@ -72,12 +72,12 @@ const AdminDashboard = () => {
         if (confirmed) {
           try {
             await fetchData(`/api/user/admin/${userId}`, 'DELETE', null, {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,  // Autorizar la solicitud con el token
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
             });
-            setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));  // Eliminar el usuario de la lista
-            toastRef.current?.addToast("Usuario eliminado correctamente", "success");  // Notificar éxito
+            setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));
+            toastRef.current?.addToast("Usuario eliminado correctamente", "success");
           } catch (error) {
-            toastRef.current?.addToast("Error al eliminar usuario", "error");  // Notificar error en la eliminación
+            toastRef.current?.addToast("Error al eliminar usuario", "error");
           }
         }
       }
@@ -87,9 +87,9 @@ const AdminDashboard = () => {
   // Paginación: Calcular los índices de los usuarios a mostrar
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);  // Obtener los usuarios para la página actual
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
-  const totalPages = Math.ceil(users.length / usersPerPage);  // Calcular el número total de páginas
+  const totalPages = Math.ceil(users.length / usersPerPage);
 
   // Funciones para navegar entre las páginas
   const nextPage = () => {
@@ -119,7 +119,7 @@ const AdminDashboard = () => {
             {currentUsers.map(user => (
               <li key={user._id} className={styles['dashboard__user-item']}>
                 <img
-                  src={user.profileImage || "/images/default-profile.png"}  // Imagen de perfil del usuario
+                  src={user.profileImage || "/images/default-profile.png"}
                   alt={user.name}
                   className={styles['dashboard__profile-image']}
                 />
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
                 </div>
                 <button
                   className={styles['dashboard__delete-button']}
-                  onClick={() => confirmDeleteUser(user._id)}  // Llamar a la función de confirmación de eliminación
+                  onClick={() => confirmDeleteUser(user._id)}
                 >
                   Eliminar
                 </button>

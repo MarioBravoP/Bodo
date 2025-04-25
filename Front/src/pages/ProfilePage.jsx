@@ -25,6 +25,7 @@ import { Link } from 'react-router-dom';
 import { FiCheck, FiX } from 'react-icons/fi';
 import ToastContainer from '@/components/ToastContainer';
 import styles from './Profile.module.css';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 const ProfilePage = () => {
   const { user } = useAuth();
@@ -37,6 +38,22 @@ const ProfilePage = () => {
   const [contacts, setContacts] = useState([]);
   const [profileData, setProfileData] = useState(null);
   const [fadingRequestIds, setFadingRequestIds] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const contactsPerPage = 5;
+
+  const indexOfLastContact = currentPage * contactsPerPage;
+  const indexOfFirstContact = indexOfLastContact - contactsPerPage;
+  const currentContacts = contacts.slice(indexOfFirstContact, indexOfLastContact);
+  const totalPages = Math.ceil(contacts.length / contactsPerPage);
+
+  const nextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
 
   const toastContainerRef = useRef(null);
 
@@ -200,28 +217,51 @@ const ProfilePage = () => {
             {contacts.length === 0 ? (
               <p>No tienes contactos aún.</p>
             ) : (
-              <ul className={styles['friends-management__contacts-list']}>
-                {contacts.map((contact) => (
-                  <li key={contact._id} className={styles['friends-management__contact-item']}>
-                    <picture className='friends-management__contact-picture'>
-                      <source
-                        srcSet={contact.profileImage || '/images/default-profile.png'}
-                        type="image/webp"
-                      />
-                      <img
-                        src={contact.profileImage || '/images/default-profile.png'}
-                        alt={contact.name}
-                        className={styles['friends-management__contact-image']}
-                      />
-                    </picture>
+              <>
+                <ul className={styles['friends-management__contacts-list']}>
+                  {currentContacts.map((contact) => (
+                    <li key={contact._id} className={styles['friends-management__contact-item']}>
+                      <picture className='friends-management__contact-picture'>
+                        <source
+                          srcSet={contact.profileImage || '/images/default-profile.png'}
+                          type="image/webp"
+                        />
+                        <img
+                          src={contact.profileImage || '/images/default-profile.png'}
+                          alt={contact.name}
+                          className={styles['friends-management__contact-image']}
+                        />
+                      </picture>
 
-                    <div className={styles['friends-management__contact-info']}>
-                      <span>{contact.name}</span>
-                      <span>{contact.email}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+                      <div className={styles['friends-management__contact-info']}>
+                        <span>{contact.name}</span>
+                        <span>{contact.email}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Paginación */}
+                <div className={styles['pagination-controls']}>
+                  <button
+                    onClick={prevPage}
+                    disabled={currentPage === 1}
+                    className={styles['pagination-button']}
+                  >
+                    <FiChevronLeft />
+                  </button>
+                  <span className={styles['pagination-info']}>
+                    Página {currentPage} de {totalPages}
+                  </span>
+                  <button
+                    onClick={nextPage}
+                    disabled={currentPage === totalPages}
+                    className={styles['pagination-button']}
+                  >
+                    <FiChevronRight />
+                  </button>
+                </div>
+              </>
             )}
           </div>
 
