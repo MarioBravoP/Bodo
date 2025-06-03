@@ -1,5 +1,11 @@
 # 📋 Bōdo - Gestión de Tareas y Tableros
 
+Link: https://bodo-front.vercel.app/
+
+Registro deshabilitado. Si quieres probar la App utiliza las siguientes credenciales:
+Email: usuario3@app.es
+Password: usuario
+
 Trabajo realizado como proyecto final para el Máster en Desarrollo Web de CEI.
 
 Bōdo es una aplicación web para la organización de tareas en equipo a través de tableros colaborativos. Incluye autenticación de usuarios, solicitudes de amistad y gestión de proyectos en tiempo real.

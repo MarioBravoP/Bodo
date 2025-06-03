@@ -73,7 +73,7 @@ const RegisterPage = () => {
       setFormData({ name: '', email: '', password: '' });
       setTimeout(() => navigate("/login"), 2000)
     } catch (err) {
-      toastRef.current?.addToast('Error al crear usuario', 'error');
+      toastRef.current?.addToast(error || 'Error al crear usuario', 'error');
     }
   };
 
