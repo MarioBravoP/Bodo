@@ -33,42 +33,43 @@ import logger from "../utils/logger.js";
 
 // Función para crear un usuario nuevo
 export const register = async (req, res) => {
-    const session = await mongoose.startSession(); // Iniciamos una sesión de MongoDB
-    session.startTransaction(); // Empezamos una transacción
+    return res.status(403).json({ message: "Registro deshabilitado." });
+    // const session = await mongoose.startSession(); // Iniciamos una sesión de MongoDB
+    // session.startTransaction(); // Empezamos una transacción
 
-    try {
-        const { name, email, password } = req.body;
+    // try {
+    //     const { name, email, password } = req.body;
 
-        // Buscamos si ya existe un usuario con el mismo email, usando la sesión
-        const userExists = await User.findOne({ email }).session(session);
+    //     // Buscamos si ya existe un usuario con el mismo email, usando la sesión
+    //     const userExists = await User.findOne({ email }).session(session);
 
-        if (userExists) {
-            // Si el usuario ya existe, cancelamos la transacción
-            await session.abortTransaction();
-            session.endSession(); // Cerramos la sesión
-            return res.status(400).json({ message: "El usuario ya existe" });
-        }
+    //     if (userExists) {
+    //         // Si el usuario ya existe, cancelamos la transacción
+    //         await session.abortTransaction();
+    //         session.endSession(); // Cerramos la sesión
+    //         return res.status(400).json({ message: "El usuario ya existe" });
+    //     }
 
-        // Creamos un nuevo usuario
-        const user = new User({ name, email, password });
+    //     // Creamos un nuevo usuario
+    //     const user = new User({ name, email, password });
 
-        // Guardamos el usuario dentro de la transacción
-        await user.save({ session });
+    //     // Guardamos el usuario dentro de la transacción
+    //     await user.save({ session });
 
-        // Confirmamos la transacción
-        await session.commitTransaction();
-        session.endSession(); // Cerramos la sesión
+    //     // Confirmamos la transacción
+    //     await session.commitTransaction();
+    //     session.endSession(); // Cerramos la sesión
 
-        // Respondemos con éxito
-        res.status(201).json({ message: "Usuario registrado correctamente" });
+    //     // Respondemos con éxito
+    //     res.status(201).json({ message: "Usuario registrado correctamente" });
 
-    } catch (error) {
-        // Si ocurre algún error, cancelamos la transacción
-        await session.abortTransaction();
-        session.endSession(); // Cerramos la sesión
-        logger.error("Error al registrar:", error);
-        res.status(500).json({ message: "Error al registrar" });
-    }
+    // } catch (error) {
+    //     // Si ocurre algún error, cancelamos la transacción
+    //     await session.abortTransaction();
+    //     session.endSession(); // Cerramos la sesión
+    //     logger.error("Error al registrar:", error);
+    //     res.status(500).json({ message: "Error al registrar" });
+    // }
 };
 
 // Función para logearse en la app, crea un token utilizando JWT
